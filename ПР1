@@ -1,0 +1,55 @@
+
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Введите первую строку (шаблон):");
+        string pattern = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(pattern))
+        {
+            Console.WriteLine("Ошибка: первая строка (шаблон) не должна быть пустой или содержать только пробелы.");
+            return;
+        }
+
+        Console.WriteLine("Введите вторую строку (текст):");
+        string text = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            Console.WriteLine("Ошибка: вторая строка (текст) не должна быть пустой или содержать только пробелы.");
+            return;
+        }
+
+        if (pattern.Length > text.Length)
+        {
+            Console.WriteLine("Ошибка: первая строка (шаблон) не может быть длиннее второй строки (текста).");
+            return;
+        }
+
+        int occurrences = CountOccurrences(text, pattern);
+
+        Console.WriteLine($"Количество вхождений: {occurrences}");
+    }
+
+    static int CountOccurrences(string text, string pattern)
+    {
+        if (string.IsNullOrEmpty(pattern) || string.IsNullOrEmpty(text))
+        {
+            return 0;
+        }
+
+        int count = 0;
+        int index = text.IndexOf(pattern);
+
+        while (index != -1)
+        {
+            count++;
+            index = text.IndexOf(pattern, index + pattern.Length);
+        }
+
+        return count;
+    }
+}
